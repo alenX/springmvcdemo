@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 配置整合mybatis过程 -->
+    <!-- 1.配置数据库相关参数properties的属性：${url} -->
+    <context:property-placeholder location="classpath:jdbc.properties" />
+
+    <!-- 2.数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${dataSource.driverClassName}"/>
+        <property name="url" value="${dataSource.url}"/>
+        <property name="username" value="${dataSource.username}"/>
+        <property name="password" value="${dataSource.password}"/>
+    </bean>
+
+    <!-- 3.配置SqlSessionFactory对象 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!-- 要映射类的包路径 -->
+        <property name="typeAliasesPackage" value="org.wangss.Model"/>
+        <property name="mapperLocations" value="classpath:mybatisMapper/*Mapper.xml"/>
+    </bean>
+
+    <!-- 4.配置扫描Dao接口包，动态实现Dao接口，注入到spring容器中 -->
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        &lt;!&ndash; 注入sqlSessionFactory &ndash;&gt;
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+        &lt;!&ndash; 给出需要扫描Dao接口包 &ndash;&gt;
+        <property name="basePackage" value="com.soecode.lyf.dao" />
+    </bean>-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="org.wangss.Mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+</beans>
