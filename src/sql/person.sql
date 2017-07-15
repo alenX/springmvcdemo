@@ -17,3 +17,5 @@ CREATE TABLE `person` (
 INSERT INTO `person` VALUES ('1', '张飞', '16');
 INSERT INTO `person` VALUES ('2', '关羽', '18');
 INSERT INTO `person` VALUES ('3', '刘备', '30');
+
+/*用户权限部门控制*/
