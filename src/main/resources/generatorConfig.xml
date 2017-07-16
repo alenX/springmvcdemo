@@ -16,6 +16,6 @@
 
         <javaClientGenerator type="XMLMAPPER" targetPackage="org.wangss.Mapper" targetProject="src/main/java"/>
 
-        <table tableName="Person"/>
+        <table tableName="sys_user"/>
     </context>
 </generatorConfiguration>
